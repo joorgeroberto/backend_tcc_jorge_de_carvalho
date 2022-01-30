@@ -4,13 +4,13 @@ import Athlete from '../typeorm/entities/Athlete';
 import AthletesRepositories from '../typeorm/repositories/AthletesRepositories';
 
 interface IRequest {
-  name: string,
-  user_type: number,
-  password: string,
-  email: string,
-  phone: number
-  birthdate: string,
-  gender: string
+  name: string;
+  user_type: number;
+  password: string;
+  email: string;
+  phone: number;
+  birthdate: string;
+  gender: string;
 }
 
 class CreateAthleteService {
@@ -21,12 +21,12 @@ class CreateAthleteService {
     email,
     phone,
     birthdate,
-    gender
+    gender,
   }: IRequest): Promise<Athlete> {
     const athletesRepositories = getCustomRepository(AthletesRepositories);
-    const athleteExists = await athletesRepositories.findByEmailAndPhone(email, phone)
+    const athleteExists = await athletesRepositories.findByEmailAndPhone(email, phone);
 
-    if(athleteExists) {
+    if (athleteExists) {
       throw new AppError('There is already one athlete with this email or phone.', 409);
     }
 
@@ -37,8 +37,8 @@ class CreateAthleteService {
       email,
       phone,
       birthdate,
-      gender
-  })
+      gender,
+    });
 
     await athletesRepositories.save(athlete);
 

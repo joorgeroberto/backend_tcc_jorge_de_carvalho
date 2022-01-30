@@ -1,5 +1,5 @@
-import { Router } from "express";
-import AthletesController from "../controllers/AthletesController";
+import { Router } from 'express';
+import AthletesController from '../controllers/AthletesController';
 import { celebrate, Joi, Segments } from 'celebrate';
 
 const athleteRouter = Router();
@@ -18,7 +18,7 @@ athleteRouter.post(
       gender: Joi.string().required(),
     },
   }),
-  athletesController.create
+  athletesController.create,
 );
 
 athleteRouter.delete(

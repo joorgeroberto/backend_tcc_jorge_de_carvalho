@@ -1,18 +1,18 @@
-import AppError from "@shared/errors/AppError";
-import { getCustomRepository } from "typeorm";
-import AthletesRepositories from "../typeorm/repositories/AthletesRepositories";
+import AppError from '@shared/errors/AppError';
+import { getCustomRepository } from 'typeorm';
+import AthletesRepositories from '../typeorm/repositories/AthletesRepositories';
 
 interface IRequest {
   id: string;
 }
 
 class DeleteAthleteService {
-  public async execute({id}: IRequest): Promise<void> {
+  public async execute({ id }: IRequest): Promise<void> {
     const athletesRepositories = getCustomRepository(AthletesRepositories);
 
-    const athlete = await athletesRepositories.findOne(id)
+    const athlete = await athletesRepositories.findOne(id);
 
-    if(!athlete) {
+    if (!athlete) {
       throw new AppError('Athlete not found', 404);
     }
 
