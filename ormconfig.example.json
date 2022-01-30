@@ -1,0 +1,17 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "",
+  "password": "",
+  "database": "tcc_jorge_de_carvalho",
+  "entities": [
+    "./dist/modules/**/typeorm/entities/*.js"
+  ],
+  "migrations": [
+    "./dist/shared/typeorm/migrations/*.js"
+  ],
+  "cli": {
+    "migrationsDir": "./dist/shared/typeorm/migrations"
+  }
+}
