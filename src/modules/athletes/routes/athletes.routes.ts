@@ -5,6 +5,8 @@ import { celebrate, Joi, Segments } from 'celebrate';
 const athleteRouter = Router();
 const athletesController = new AthletesController();
 
+athleteRouter.get('/', athletesController.index);
+
 athleteRouter.post(
   '/',
   celebrate({
@@ -13,12 +15,27 @@ athleteRouter.post(
       user_type: Joi.number().required(),
       password: Joi.string().required(),
       email: Joi.string().required(),
-      phone: Joi.number().required(),
+      phone: Joi.string().required(),
       birthdate: Joi.string().required(),
       gender: Joi.string().required(),
     },
   }),
   athletesController.create,
+);
+
+athleteRouter.put(
+  '/:id',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      password: Joi.string().required(),
+      email: Joi.string().required(),
+      phone: Joi.string().required(),
+      birthdate: Joi.string().required(),
+      gender: Joi.string().required(),
+    },
+  }),
+  athletesController.update,
 );
 
 athleteRouter.delete(

@@ -11,9 +11,17 @@ class AthletesRepositories extends Repository<Athlete> {
     return athlete;
   }
 
-  public async findByEmailAndPhone(email: string, phone: number): Promise<Athlete | undefined> {
+  public async findByEmail(email: string): Promise<Athlete | undefined> {
     const athlete = this.findOne({
-      where: { email, phone },
+      where: { email },
+    });
+
+    return athlete;
+  }
+
+  public async findByPhone(phone: string): Promise<Athlete | undefined> {
+    const athlete = this.findOne({
+      where: { phone },
     });
 
     return athlete;

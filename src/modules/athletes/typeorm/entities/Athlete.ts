@@ -23,8 +23,8 @@ class Athlete {
   @Column()
   email: string;
 
-  @Column('int')
-  phone: number;
+  @Column()
+  phone: string;
 
   @Column()
   birthdate: string;

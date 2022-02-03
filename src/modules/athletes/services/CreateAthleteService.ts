@@ -8,7 +8,7 @@ interface IRequest {
   user_type: number;
   password: string;
   email: string;
-  phone: number;
+  phone: string;
   birthdate: string;
   gender: string;
 }
@@ -24,8 +24,10 @@ class CreateAthleteService {
     gender,
   }: IRequest): Promise<Athlete> {
     const athletesRepositories = getCustomRepository(AthletesRepositories);
-    const athleteExists = await athletesRepositories.findByEmailAndPhone(email, phone);
+    const athleteWithEmailExists = await athletesRepositories.findByEmail(email);
+    const athleteWithPhoneExists = await athletesRepositories.findByPhone(phone);
 
+    const athleteExists = athleteWithEmailExists || athleteWithPhoneExists;
     if (athleteExists) {
       throw new AppError('There is already one athlete with this email or phone.', 409);
     }
