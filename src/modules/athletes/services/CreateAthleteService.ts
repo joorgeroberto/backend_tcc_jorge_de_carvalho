@@ -1,4 +1,5 @@
 import AppError from '@shared/errors/AppError';
+import { hash } from 'bcryptjs';
 import { getCustomRepository } from 'typeorm';
 import Athlete from '../typeorm/entities/Athlete';
 import AthletesRepositories from '../typeorm/repositories/AthletesRepositories';
@@ -32,10 +33,12 @@ class CreateAthleteService {
       throw new AppError('There is already one athlete with this email or phone.', 409);
     }
 
+    const hashedPassword = await hash(password, 8);
+
     const athlete = athletesRepositories.create({
       name,
       user_type,
-      password,
+      password: hashedPassword,
       email,
       phone,
       birthdate,
