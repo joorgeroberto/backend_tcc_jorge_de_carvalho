@@ -1,5 +1,6 @@
 import AppError from '@shared/errors/AppError';
 import { sign } from 'jsonwebtoken';
+import authConfig from '@config/auth';
 import { compare } from 'bcryptjs';
 import { getCustomRepository } from 'typeorm';
 import Athlete from '../typeorm/entities/Athlete';
@@ -19,7 +20,7 @@ class CreateSessionsService {
   public async execute({ phone, password }: IRequest): Promise<IResponse> {
     const athletesRepositories = getCustomRepository(AthletesRepositories);
 
-    const athlete = await athletesRepositories.findByPhone(phone);
+    let athlete = await athletesRepositories.findByPhone(phone);
     if (!athlete) {
       throw new AppError('Incorrect phone or password', 401);
     }
@@ -29,10 +30,12 @@ class CreateSessionsService {
       throw new AppError('Incorrect phone or password', 401);
     }
 
-    const token = sign({}, 'a855b7f4c8733805c060872e053f5631', {
+    const token = sign({}, authConfig.jwt.secret, {
       subject: athlete.id,
-      expiresIn: '1d', // token com validade de um dia
+      expiresIn: authConfig.jwt.expiresIn,
     });
+
+    athlete = { ...athlete, password: '' };
 
     return {
       athlete,

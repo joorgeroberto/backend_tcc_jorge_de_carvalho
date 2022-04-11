@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import AthletesController from '../controllers/AthletesController';
 import { celebrate, Joi, Segments } from 'celebrate';
+import isAutheticated from '@shared/http/middlewares/isAutheticated';
 
 const athleteRouter = Router();
 const athletesController = new AthletesController();
 
-athleteRouter.get('/', athletesController.index);
+athleteRouter.get('/', isAutheticated, athletesController.index);
 
 athleteRouter.post(
   '/',

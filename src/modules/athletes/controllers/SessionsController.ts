@@ -6,11 +6,11 @@ export default class SessionsController {
     const { phone, password } = request.body;
 
     const createSession = new CreateSessionsService();
-    const user = await createSession.execute({
+    const athlete = await createSession.execute({
       phone,
       password,
     });
 
-    return response.json(user);
+    return response.json(athlete);
   }
 }

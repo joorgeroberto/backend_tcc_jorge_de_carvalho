@@ -8,6 +8,8 @@ class ListAthleteService {
 
     const athletes = await athletesRepositories.find();
 
+    athletes.map(athlete => (athlete.password = ''));
+
     return athletes;
   }
 }
