@@ -6,23 +6,25 @@ import { hash } from 'bcryptjs';
 
 interface IRequest {
   id: string;
-  name: string;
-  password: string;
-  email: string;
-  phone: string;
-  birthdate: string;
-  gender: string;
+  // name: string;
+  // password: string;
+  // email: string;
+  // phone: string;
+  // birthdate: string;
+  // gender: string;
+  group_id: string;
 }
 
 class UpdateAthleteService {
   public async execute({
     id,
-    name,
-    password,
-    email,
-    phone,
-    birthdate,
-    gender,
+    // name,
+    // password,
+    // email,
+    // phone,
+    // birthdate,
+    // gender,
+    group_id,
   }: IRequest): Promise<Athlete> {
     const athletesRepositories = getCustomRepository(AthletesRepositories);
     let athlete = await athletesRepositories.findOne(id);
@@ -31,30 +33,31 @@ class UpdateAthleteService {
       throw new AppError('Athlete not found.');
     }
 
-    const foundAthleteHasDiferentEmail = athlete?.email !== email;
-    if (foundAthleteHasDiferentEmail) {
-      const athleteWithEmail = await athletesRepositories.findByEmail(email);
-      if (athleteWithEmail)
-        throw new AppError('There is already one athlete with this email or phone.');
-    }
+    // const foundAthleteHasDiferentEmail = athlete?.email !== email;
+    // if (foundAthleteHasDiferentEmail) {
+    //   const athleteWithEmail = await athletesRepositories.findByEmail(email);
+    //   if (athleteWithEmail)
+    //     throw new AppError('There is already one athlete with this email or phone.');
+    // }
 
-    const foundAthleteHasDiferentPhone = athlete?.phone !== phone;
+    // const foundAthleteHasDiferentPhone = athlete?.phone !== phone;
 
-    if (foundAthleteHasDiferentPhone) {
-      const athleteWithPhone = await athletesRepositories.findByPhone(phone);
-      if (athleteWithPhone) {
-        throw new AppError('There is already one athlete with this email or phone.');
-      }
-    }
+    // if (foundAthleteHasDiferentPhone) {
+    //   const athleteWithPhone = await athletesRepositories.findByPhone(phone);
+    //   if (athleteWithPhone) {
+    //     throw new AppError('There is already one athlete with this email or phone.');
+    //   }
+    // }
 
-    const hashedPassword = await hash(password, 8);
+    // const hashedPassword = await hash(password, 8);
 
-    athlete.name = name;
-    athlete.password = hashedPassword;
-    athlete.email = email;
-    athlete.phone = phone;
-    athlete.birthdate = birthdate;
-    athlete.gender = gender;
+    // athlete.name = name;
+    // athlete.password = hashedPassword;
+    // athlete.email = email;
+    // athlete.phone = phone;
+    // athlete.birthdate = birthdate;
+    // athlete.gender = gender;
+    athlete.group_id = group_id;
 
     await athletesRepositories.update(id, athlete);
 

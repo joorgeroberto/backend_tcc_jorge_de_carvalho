@@ -13,12 +13,17 @@ athleteRouter.post(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
-      user_type: Joi.number().required(),
+      user_type: Joi.string().required(),
       password: Joi.string().required(),
       email: Joi.string().required(),
       phone: Joi.string().required(),
       birthdate: Joi.string().required(),
       gender: Joi.string().required(),
+      group_id: Joi.string(),
+
+      group_name: Joi.string(),
+      athletes_quantity: Joi.number(),
+      sport_name: Joi.string(),
     },
   }),
   athletesController.create,
@@ -28,12 +33,13 @@ athleteRouter.put(
   '/:id',
   celebrate({
     [Segments.BODY]: {
-      name: Joi.string().required(),
-      password: Joi.string().required(),
-      email: Joi.string().required(),
-      phone: Joi.string().required(),
-      birthdate: Joi.string().required(),
-      gender: Joi.string().required(),
+      // name: Joi.string().required(),
+      // password: Joi.string().required(),
+      // email: Joi.string().required(),
+      // phone: Joi.string().required(),
+      // birthdate: Joi.string().required(),
+      // gender: Joi.string().required(),
+      group_id: Joi.string(),
     },
   }),
   athletesController.update,

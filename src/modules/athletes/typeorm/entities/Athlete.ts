@@ -14,8 +14,8 @@ class Athlete {
   @Column()
   name: string;
 
-  @Column('int')
-  user_type: number;
+  @Column()
+  user_type: string;
 
   @Column()
   password: string;
@@ -31,6 +31,12 @@ class Athlete {
 
   @Column()
   gender: string;
+
+  @Column('uuid')
+  group_id: string;
+
+  @Column()
+  image: string;
 
   @CreateDateColumn()
   created_at: Date;

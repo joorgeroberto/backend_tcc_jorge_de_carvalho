@@ -6,12 +6,13 @@ import AthletesRepositories from '../typeorm/repositories/AthletesRepositories';
 
 interface IRequest {
   name: string;
-  user_type: number;
+  user_type: string;
   password: string;
   email: string;
   phone: string;
   birthdate: string;
   gender: string;
+  group_id: string;
 }
 
 class CreateAthleteService {
@@ -23,6 +24,7 @@ class CreateAthleteService {
     phone,
     birthdate,
     gender,
+    group_id,
   }: IRequest): Promise<Athlete> {
     const athletesRepositories = getCustomRepository(AthletesRepositories);
     const athleteWithEmailExists = await athletesRepositories.findByEmail(email);
@@ -43,9 +45,12 @@ class CreateAthleteService {
       phone,
       birthdate,
       gender,
+      group_id,
     });
 
     await athletesRepositories.save(athlete);
+
+    athlete.password = '';
 
     return athlete;
   }
