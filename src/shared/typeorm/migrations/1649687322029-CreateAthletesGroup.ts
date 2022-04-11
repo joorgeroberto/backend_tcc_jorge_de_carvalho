@@ -29,7 +29,9 @@ export class CreateAthletesGroup1649687322029 implements MigrationInterface {
           },
           {
             name: 'sport_name',
-            type: 'varchar',
+            type: 'enum',
+            enum: ['run'],
+            default: `'run'`,
           },
           {
             name: 'created_at',

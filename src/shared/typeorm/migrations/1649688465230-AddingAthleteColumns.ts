@@ -30,6 +30,7 @@ export class AddingAthleteColumns1649688465230 implements MigrationInterface {
       new TableColumn({
         name: 'user_type',
         type: 'int',
+        default: 0,
       }),
     );
   }
