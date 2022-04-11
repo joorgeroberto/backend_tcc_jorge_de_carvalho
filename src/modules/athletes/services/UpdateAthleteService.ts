@@ -2,6 +2,7 @@ import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Athlete from '../typeorm/entities/Athlete';
 import AthletesRepositories from '../typeorm/repositories/AthletesRepositories';
+import { hash } from 'bcryptjs';
 
 interface IRequest {
   id: string;
@@ -24,7 +25,7 @@ class UpdateAthleteService {
     gender,
   }: IRequest): Promise<Athlete> {
     const athletesRepositories = getCustomRepository(AthletesRepositories);
-    const athlete = await athletesRepositories.findOne(id);
+    let athlete = await athletesRepositories.findOne(id);
 
     if (!athlete) {
       throw new AppError('Athlete not found.');
@@ -46,14 +47,18 @@ class UpdateAthleteService {
       }
     }
 
+    const hashedPassword = await hash(password, 8);
+
     athlete.name = name;
-    athlete.password = password;
+    athlete.password = hashedPassword;
     athlete.email = email;
     athlete.phone = phone;
     athlete.birthdate = birthdate;
     athlete.gender = gender;
 
     await athletesRepositories.update(id, athlete);
+
+    athlete = { ...athlete, password: '' };
 
     return athlete;
   }

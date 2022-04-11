@@ -13,7 +13,7 @@ class AthletesRepositories extends Repository<Athlete> {
 
   public async findByEmail(email: string): Promise<Athlete | undefined> {
     const athlete = this.findOne({
-      where: { email },
+      where: { email: email.toLowerCase() },
     });
 
     return athlete;

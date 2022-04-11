@@ -7,7 +7,7 @@ import Athlete from '../typeorm/entities/Athlete';
 import AthletesRepositories from '../typeorm/repositories/AthletesRepositories';
 
 interface IRequest {
-  phone: string;
+  email: string;
   password: string;
 }
 
@@ -17,17 +17,17 @@ interface IResponse {
 }
 
 class CreateSessionsService {
-  public async execute({ phone, password }: IRequest): Promise<IResponse> {
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
     const athletesRepositories = getCustomRepository(AthletesRepositories);
 
-    let athlete = await athletesRepositories.findByPhone(phone);
+    let athlete = await athletesRepositories.findByEmail(email);
     if (!athlete) {
-      throw new AppError('Incorrect phone or password', 401);
+      throw new AppError('Incorrect email or password', 401);
     }
 
     const passwordConfirmed = await compare(password, athlete.password);
     if (!passwordConfirmed) {
-      throw new AppError('Incorrect phone or password', 401);
+      throw new AppError('Incorrect email or password', 401);
     }
 
     const token = sign({}, authConfig.jwt.secret, {
