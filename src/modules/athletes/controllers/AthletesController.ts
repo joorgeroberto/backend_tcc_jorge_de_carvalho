@@ -5,6 +5,7 @@ import ListAthleteService from '../services/ListAthleteService';
 import UpdateAthleteService from '../services/UpdateAthleteService';
 
 import CreateAthletesGroupService from '../../athletesGroup/services/CreateAthletesGroupService';
+import CreateSessionsService from '../services/CreateSessionsService';
 
 export default class AthletesController {
   public async index(_: Request, response: Response): Promise<Response> {
@@ -41,15 +42,19 @@ export default class AthletesController {
       });
 
       const updateAthlete = new UpdateAthleteService();
-      const athleteWithUpdatedGroup = await updateAthlete.execute({
+      await updateAthlete.execute({
         id: athlete.id,
         group_id: group.id,
       });
-
-      return response.json(athleteWithUpdatedGroup);
     }
 
-    return response.json(athlete);
+    const createSession = new CreateSessionsService();
+    const loggedAthlete = await createSession.execute({
+      email,
+      password,
+    });
+
+    return response.json(loggedAthlete);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {

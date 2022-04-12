@@ -22,6 +22,8 @@ class CreateAthletesGroupService {
       throw new AppError('There is already one athletes group with this name.', 409);
     }
 
+    console.log(group_name, athletes_quantity, sport_name);
+
     const athletesGroup = athletesGroupRepositories.create({
       name: group_name,
       athletes_quantity,
