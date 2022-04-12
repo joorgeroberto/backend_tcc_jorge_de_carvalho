@@ -4,7 +4,7 @@ import DeleteAthleteService from '../services/DeleteAthleteService';
 import ListAthleteService from '../services/ListAthleteService';
 import UpdateAthleteService from '../services/UpdateAthleteService';
 
-import AthletesGroupController from '@modules/athletesGroup/controllers/AthletesGroupController';
+import CreateAthletesGroupService from '../../athletesGroup/services/CreateAthletesGroupService';
 
 export default class AthletesController {
   public async index(_: Request, response: Response): Promise<Response> {
@@ -23,7 +23,7 @@ export default class AthletesController {
       user_type,
       password,
       email,
-      phone,
+      phone: phone.replace(/[^0-9]/g, ''),
       birthdate,
       gender,
       group_id,
@@ -31,11 +31,22 @@ export default class AthletesController {
 
     const isAdvisor = user_type === 'advisor';
     if (isAdvisor) {
-      const athletesGroupController = new AthletesGroupController();
-      // request.body.isForAdvisor = true;
-      await athletesGroupController.create(request, response);
-      // request.body.group_id = group?.id;
-      // console.log(group);
+      const { athletes_quantity, sport_name, group_name } = request.body;
+
+      const createAthletesGroup = new CreateAthletesGroupService();
+      const group = await createAthletesGroup.execute({
+        athletes_quantity,
+        sport_name,
+        group_name,
+      });
+
+      const updateAthlete = new UpdateAthleteService();
+      const athleteWithUpdatedGroup = await updateAthlete.execute({
+        id: athlete.id,
+        group_id: group.id,
+      });
+
+      return response.json(athleteWithUpdatedGroup);
     }
 
     return response.json(athlete);

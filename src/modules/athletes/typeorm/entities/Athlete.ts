@@ -17,7 +17,7 @@ class Athlete {
   @Column()
   user_type: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Column()

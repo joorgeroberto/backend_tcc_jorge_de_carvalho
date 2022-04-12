@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 interface IResponse {
-  athlete: Athlete;
+  athlete: Omit<Athlete, 'password'>;
   token: string;
 }
 
@@ -20,22 +20,22 @@ class CreateSessionsService {
   public async execute({ email, password }: IRequest): Promise<IResponse> {
     const athletesRepositories = getCustomRepository(AthletesRepositories);
 
-    let athlete = await athletesRepositories.findByEmail(email);
-    if (!athlete) {
+    const _athlete = await athletesRepositories.findByEmailWithPassword(email);
+    if (!_athlete) {
       throw new AppError('Incorrect email or password', 401);
     }
 
-    const passwordConfirmed = await compare(password, athlete.password);
+    const passwordConfirmed = await compare(password, _athlete.password);
     if (!passwordConfirmed) {
       throw new AppError('Incorrect email or password', 401);
     }
 
     const token = sign({}, authConfig.jwt.secret, {
-      subject: athlete.id,
+      subject: _athlete.id,
       expiresIn: authConfig.jwt.expiresIn,
     });
 
-    athlete = { ...athlete, password: '' };
+    const { password: _, ...athlete } = _athlete;
 
     return {
       athlete,

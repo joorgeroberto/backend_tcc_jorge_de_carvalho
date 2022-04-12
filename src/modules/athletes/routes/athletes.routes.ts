@@ -1,10 +1,16 @@
 import { Router } from 'express';
 import AthletesController from '../controllers/AthletesController';
 import { celebrate, Joi, Segments } from 'celebrate';
+import multer from 'multer';
+import uploadConfig from '@config/upload';
 import isAutheticated from '@shared/http/middlewares/isAutheticated';
+import AthletesImageController from '../controllers/AthletesImageController';
 
 const athleteRouter = Router();
 const athletesController = new AthletesController();
+const athletesImageController = new AthletesImageController();
+
+const upload = multer(uploadConfig);
 
 athleteRouter.get('/', isAutheticated, athletesController.index);
 
@@ -53,6 +59,13 @@ athleteRouter.delete(
     },
   }),
   athletesController.delete,
+);
+
+athleteRouter.patch(
+  '/image',
+  isAutheticated,
+  upload.single('image'), // single pois estaremos enviando apenas um arquivo
+  athletesImageController.update,
 );
 
 export default athleteRouter;

@@ -25,7 +25,7 @@ class CreateAthletesGroupService {
     const athletesGroup = athletesGroupRepositories.create({
       name: group_name,
       athletes_quantity,
-      sport_name,
+      sport_name: sport_name || 'run',
     });
 
     await athletesGroupRepositories.save(athletesGroup);

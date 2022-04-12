@@ -9,11 +9,7 @@ interface ITokenPayload {
   sub: string; // athleteID
 }
 
-export default function isAutheticated(
-  request: Request,
-  response: Response,
-  next: NextFunction,
-): void {
+export default function isAutheticated(request: Request, _: Response, next: NextFunction): void {
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {

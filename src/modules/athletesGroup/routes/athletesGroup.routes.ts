@@ -13,7 +13,7 @@ athletesGroupRouter.post(
     [Segments.BODY]: {
       group_name: Joi.string().required(),
       athletes_quantity: Joi.number().required(),
-      sport_name: Joi.string().required(),
+      sport_name: Joi.string(),
     },
   }),
   athletesGroupController.create,
