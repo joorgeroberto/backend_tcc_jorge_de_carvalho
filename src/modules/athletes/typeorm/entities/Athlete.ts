@@ -14,23 +14,29 @@ class Athlete {
   @Column()
   name: string;
 
-  @Column('int')
-  user_type: number;
-
   @Column()
+  user_type: string;
+
+  @Column({ select: false })
   password: string;
 
   @Column()
   email: string;
 
-  @Column('int')
-  phone: number;
+  @Column()
+  phone: string;
 
   @Column()
   birthdate: string;
 
   @Column()
   gender: string;
+
+  @Column('uuid')
+  group_id: string;
+
+  @Column()
+  image: string;
 
   @CreateDateColumn()
   created_at: Date;

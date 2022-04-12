@@ -6,11 +6,15 @@ import cors from 'cors';
 import routes from './routes';
 import AppError from '@shared/errors/AppError';
 import '@shared/typeorm';
+import uploadConfig from '@config/upload';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// rota estática para pegar a imagem de um usuario
+app.use('/files', express.static(uploadConfig.directory));
 
 app.use(routes);
 
@@ -23,6 +27,8 @@ app.use((error: Error, _: Request, response: Response, next: NextFunction) => {
       message: error.message,
     });
   }
+
+  console.log(error);
 
   return response.status(500).json({
     status: 'error',
