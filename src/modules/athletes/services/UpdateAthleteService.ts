@@ -34,11 +34,15 @@ class UpdateAthleteService {
       throw new AppError('Athlete not found.');
     }
 
+    console.log('athlete', athlete);
+
     const athletesGroupRepositories = getCustomRepository(AthletesGroupRepositories);
     const athleteGroup = await athletesGroupRepositories.findById(group_id);
     if (!athleteGroup) {
       throw new AppError('Athlete group not found.');
     }
+
+    console.log('athleteGroup', athleteGroup);
     // const foundAthleteHasDiferentEmail = athlete?.email !== email;
     // if (foundAthleteHasDiferentEmail) {
     //   const athleteWithEmail = await athletesRepositories.findByEmail(email);
@@ -65,7 +69,11 @@ class UpdateAthleteService {
     // athlete.gender = gender;
     athlete.group_id = group_id;
 
+    console.log('updated athlete', athlete);
+
     await athletesRepositories.update(id, athlete);
+
+    console.log('\n\natualizou!!!!\n\n');
 
     athlete = { ...athlete };
 
