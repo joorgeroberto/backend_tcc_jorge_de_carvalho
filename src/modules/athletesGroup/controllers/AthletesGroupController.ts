@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import ListAthletesGroupService from '../services/ListAthletesGroupService';
 import CreateAthletesGroupService from '../services/CreateAthletesGroupService';
 import DeleteAthletesGroupService from '../services/DeleteAthletesGroupService';
-import AthletesGroup from '../typeorm/entities/AthletesGroup';
 
 export default class AthletesGroupController {
   public async index(_: Request, response: Response): Promise<Response> {
@@ -13,18 +12,17 @@ export default class AthletesGroupController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { group_name, athletes_quantity, sport_name, image } = request.body;
+    const { group_name, athletes_quantity, sport_name, image, advisor_name, advisor_id } =
+      request.body;
 
     const createAthletesGroup = new CreateAthletesGroupService();
     const athletesGroup = await createAthletesGroup.execute({
+      advisor_name,
+      advisor_id,
       group_name,
       athletes_quantity,
       sport_name,
     });
-
-    /*
-  @Column()
-  image: string;*/
 
     return response.json(athletesGroup);
   }

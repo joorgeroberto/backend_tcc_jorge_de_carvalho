@@ -18,6 +18,8 @@ athletesGroupRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
+      advisor_name: Joi.string().required(),
+      advisor_id: Joi.string().required(),
       group_name: Joi.string().required(),
       athletes_quantity: Joi.number().required(),
       sport_name: Joi.string(),
