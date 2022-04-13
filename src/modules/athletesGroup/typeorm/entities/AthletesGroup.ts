@@ -23,6 +23,12 @@ class AthletesGroup {
   @Column()
   sport_name: string;
 
+  @Column()
+  advisor_name: string;
+
+  @Column('uuid')
+  advisor_id: string;
+
   @CreateDateColumn()
   created_at: Date;
 

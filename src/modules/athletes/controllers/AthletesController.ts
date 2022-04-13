@@ -36,6 +36,8 @@ export default class AthletesController {
 
       const createAthletesGroup = new CreateAthletesGroupService();
       const group = await createAthletesGroup.execute({
+        advisor_name: athlete.name,
+        advisor_id: athlete.id,
         athletes_quantity,
         sport_name,
         group_name,
