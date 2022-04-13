@@ -3,14 +3,25 @@ import Athlete from '../entities/Athlete';
 
 @EntityRepository(Athlete)
 class AthletesRepositories extends Repository<Athlete> {
+  // public async findByIdWithPassword(id: string): Promise<Athlete | undefined> {
+  //   return (
+  //     this.createQueryBuilder()
+  //       .addSelect('Athlete.password')
+  //       .where(`Athlete.id = :id`, { id: id })
+  //       // .where(`"id" ILIKE '${id}'`)
+  //       .getOne()
+  //   );
+  // }
   public async findByIdWithPassword(id: string): Promise<Athlete | undefined> {
-    return (
-      this.createQueryBuilder()
-        .addSelect('Athlete.password')
-        .where(`Athlete.id = :id`, { id: id })
-        // .where(`"id" ILIKE '${id}'`)
-        .getOne()
-    );
+    // const athlete = await this.findOne({
+    //   where: { id },
+    // });
+    return this.createQueryBuilder('athletes')
+      .addSelect('athletes.password')
+      .where(`athletes.id = :id`, { id: id })
+      .getOne();
+
+    // return athlete;
   }
 
   public async findById(id: string): Promise<Athlete | undefined> {
