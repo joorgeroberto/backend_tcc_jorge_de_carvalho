@@ -2,6 +2,7 @@ import AppError from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Athlete from '../typeorm/entities/Athlete';
 import AthletesRepositories from '../typeorm/repositories/AthletesRepositories';
+import AthletesGroupRepositories from '../../athletesGroup/typeorm/repositories/AthletesGroupRepositories';
 // import { hash } from 'bcryptjs';
 
 interface IRequest {
@@ -27,12 +28,17 @@ class UpdateAthleteService {
     group_id,
   }: IRequest): Promise<Athlete> {
     const athletesRepositories = getCustomRepository(AthletesRepositories);
-    let athlete = await athletesRepositories.findOne(id);
+    let athlete = await athletesRepositories.findByIdWithPassword(id);
 
     if (!athlete) {
       throw new AppError('Athlete not found.');
     }
 
+    const athletesGroupRepositories = getCustomRepository(AthletesGroupRepositories);
+    const athleteGroup = await athletesGroupRepositories.findById(group_id);
+    if (!athleteGroup) {
+      throw new AppError('Athlete group not found.');
+    }
     // const foundAthleteHasDiferentEmail = athlete?.email !== email;
     // if (foundAthleteHasDiferentEmail) {
     //   const athleteWithEmail = await athletesRepositories.findByEmail(email);
@@ -61,7 +67,7 @@ class UpdateAthleteService {
 
     await athletesRepositories.update(id, athlete);
 
-    athlete = { ...athlete, password: '' };
+    athlete = { ...athlete };
 
     return athlete;
   }

@@ -3,6 +3,13 @@ import Athlete from '../entities/Athlete';
 
 @EntityRepository(Athlete)
 class AthletesRepositories extends Repository<Athlete> {
+  public async findByIdWithPassword(id: string): Promise<Athlete | undefined> {
+    return this.createQueryBuilder()
+      .addSelect('Athlete.password')
+      .where(`"id" ILIKE '${id}'`)
+      .getOne();
+  }
+
   public async findById(id: string): Promise<Athlete | undefined> {
     const athlete = await this.findOne({
       where: { id },

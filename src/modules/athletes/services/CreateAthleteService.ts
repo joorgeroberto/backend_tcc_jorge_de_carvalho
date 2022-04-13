@@ -50,8 +50,6 @@ class CreateAthleteService {
 
     await athletesRepositories.save(athlete);
 
-    athlete.password = '';
-
     return athlete;
   }
 }
