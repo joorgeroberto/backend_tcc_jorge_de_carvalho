@@ -64,7 +64,7 @@ athleteRouter.delete(
 athleteRouter.patch(
   '/image',
   isAutheticated,
-  upload.single('image'), // single pois estaremos enviando apenas um arquivo
+  upload.single('athlete_image'), // single pois estaremos enviando apenas um arquivo
   athletesImageController.update,
 );
 
