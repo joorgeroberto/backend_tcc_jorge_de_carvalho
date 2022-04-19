@@ -14,7 +14,7 @@ planningRouter.post(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
-      numberWeeks: Joi.number().required(),
+      numberOfWeeks: Joi.number().required(),
       startDate: Joi.string().required(),
       endDate: Joi.string().required(),
       athleteId: Joi.string().required(),
@@ -46,6 +46,17 @@ planningRouter.post(
     },
   }),
   planningsController.create,
+);
+
+planningRouter.delete(
+  '/:id',
+  isAutheticated,
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  planningsController.delete,
 );
 
 export default planningRouter;

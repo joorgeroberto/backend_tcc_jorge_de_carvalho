@@ -34,7 +34,7 @@ class Athlete {
   @Column()
   gender: string;
 
-  @Column('uuid')
+  @Column('uuid', { nullable: true })
   group_id: string;
 
   @Column({ nullable: true })

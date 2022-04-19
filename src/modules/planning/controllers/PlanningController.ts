@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import CreatePlanningService from '../services/CreatePlanningService';
 import ListPlanningsService from '../services/ListPlanningsService';
+import DeletePlanningService from '../services/DeletePlanningService';
 
 export default class PlanningController {
   public async index(_: Request, response: Response): Promise<Response> {
@@ -11,22 +12,30 @@ export default class PlanningController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, numberWeeks, startDate, endDate, athleteId, trainings } = request.body;
+    const { id: advisorId } = request.athlete;
+    const { name, numberOfWeeks, startDate, endDate, athleteId, trainings } = request.body;
 
     const createPlanning = new CreatePlanningService();
     const planning = await createPlanning.execute({
       name,
-      numberWeeks,
+      numberOfWeeks,
       startDate,
       endDate,
+      advisorId,
       athleteId,
       trainings,
     });
 
     return response.json(planning);
+  }
 
-    // console.log(name, numberWeeks, startDate, endDate, athleteId, trainings);
+  public async delete(request: Request, response: Response): Promise<Response> {
+    const { id: planningId } = request.params;
+    const { id: advisorId } = request.athlete;
 
-    // return response.json('deu bom');
+    const deletePlanning = new DeletePlanningService();
+    await deletePlanning.execute({ planningId, advisorId });
+
+    return response.json([]);
   }
 }
