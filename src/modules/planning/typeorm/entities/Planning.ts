@@ -30,7 +30,7 @@ class Planning {
   @Column('uuid', { name: 'athlete_id' })
   athleteId: string;
 
-  @OneToMany(() => Training, trainings => trainings.planning)
+  @OneToMany(() => Training, trainings => trainings.planning, { cascade: true })
   trainings: Training[];
 
   @ManyToOne(() => Athlete, athlete => athlete.plannings, {
@@ -40,7 +40,7 @@ class Planning {
   @JoinColumn({ name: 'athlete_id', referencedColumnName: 'id' })
   athlete: Athlete;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', default: 'now()' })
   createdAt: Date;
 }
 

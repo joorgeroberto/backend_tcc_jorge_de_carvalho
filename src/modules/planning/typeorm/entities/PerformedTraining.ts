@@ -45,7 +45,7 @@ class PerformedTraining {
   @JoinColumn({ name: 'training_id', referencedColumnName: 'id' })
   training: Training;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', default: 'now()' })
   createdAt: Date;
 }
 

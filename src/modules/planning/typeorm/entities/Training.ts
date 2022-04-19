@@ -36,10 +36,10 @@ class Training {
   @OneToOne(() => PerformedTraining, performedTraining => performedTraining.training)
   performedTraining: PerformedTraining;
 
-  @OneToMany(() => ExerciseGroup, exerciseGroup => exerciseGroup.training)
+  @OneToMany(() => ExerciseGroup, exerciseGroup => exerciseGroup.training, { cascade: true })
   exerciseGroups: ExerciseGroup[];
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', default: 'now()' })
   createdAt: Date;
 }
 

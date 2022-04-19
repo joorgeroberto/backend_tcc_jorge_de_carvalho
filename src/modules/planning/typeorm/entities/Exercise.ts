@@ -22,10 +22,10 @@ class Exercise {
   @Column('varchar')
   type: ExerciseType;
 
-  @Column('varchar')
+  @Column('varchar', { nullable: true })
   duration: string;
 
-  @Column('float')
+  @Column('float', { nullable: true })
   distance: number;
 
   @Column('varchar')
@@ -38,7 +38,7 @@ class Exercise {
   @JoinColumn({ name: 'exercise_group_id', referencedColumnName: 'id' })
   exerciseGroup: ExerciseGroup;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', default: 'now()' })
   createdAt: Date;
 }
 

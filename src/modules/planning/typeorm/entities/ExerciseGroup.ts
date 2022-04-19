@@ -28,10 +28,10 @@ class ExerciseGroup {
   @Column('int', { name: 'number_repetitions' })
   numberRepetitions: number;
 
-  @OneToMany(() => Exercise, exercises => exercises.exerciseGroup)
+  @OneToMany(() => Exercise, exercises => exercises.exerciseGroup, { cascade: true })
   exercises: Exercise[];
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', default: 'now()' })
   createdAt: Date;
 }
 
