@@ -16,7 +16,7 @@ class Athlete {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ default: 'athlete' })
   user_type: string;
 
   @Column({ select: false })
@@ -37,7 +37,7 @@ class Athlete {
   @Column('uuid')
   group_id: string;
 
-  @Column()
+  @Column({ nullable: true })
   image: string;
 
   @CreateDateColumn()
