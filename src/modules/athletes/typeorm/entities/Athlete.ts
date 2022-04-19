@@ -1,7 +1,9 @@
+import Planning from '@modules/planning/typeorm/entities/Planning';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -40,6 +42,9 @@ class Athlete {
 
   @CreateDateColumn()
   created_at: Date;
+
+  @OneToMany(() => Planning, plannings => plannings.athlete)
+  plannings: Planning[];
 
   @UpdateDateColumn()
   updated_at: Date;
