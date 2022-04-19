@@ -1,7 +1,9 @@
+import Planning from '@modules/planning/typeorm/entities/Planning';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -14,7 +16,7 @@ class Athlete {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ default: 'athlete' })
   user_type: string;
 
   @Column({ select: false })
@@ -32,14 +34,17 @@ class Athlete {
   @Column()
   gender: string;
 
-  @Column('uuid')
+  @Column('uuid', { nullable: true })
   group_id: string;
 
-  @Column()
+  @Column({ nullable: true })
   image: string;
 
   @CreateDateColumn()
   created_at: Date;
+
+  @OneToMany(() => Planning, plannings => plannings.athlete)
+  plannings: Planning[];
 
   @UpdateDateColumn()
   updated_at: Date;

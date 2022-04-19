@@ -11,7 +11,7 @@ class AthletesGroup {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   image: string;
 
   @Column()
@@ -20,7 +20,7 @@ class AthletesGroup {
   @Column('int')
   athletes_quantity: number;
 
-  @Column()
+  @Column({ default: 'run' })
   sport_name: string;
 
   @Column()
