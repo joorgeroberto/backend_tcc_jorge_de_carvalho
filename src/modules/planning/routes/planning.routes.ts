@@ -22,7 +22,7 @@ planningRouter.post(
         .items(
           Joi.object({
             date: Joi.string().required(),
-            isOptional: Joi.boolean().required(),
+            type: Joi.string().required(),
             exerciseGroups: Joi.array()
               .items(
                 Joi.object({
