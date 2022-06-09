@@ -10,6 +10,25 @@ class PlanningRepositories extends Repository<Planning> {
 
     return planning;
   }
+
+  public async findByAthleteId(athleteId: string): Promise<Planning[]> {
+    const planning = await this.find({
+      where: { athleteId },
+      relations: ['trainings', 'trainings.exerciseGroups', 'trainings.exerciseGroups.exercises'],
+      /*
+      * Another way to do this select:
+
+      join: {
+        alias: 'planning',
+        innerJoinAndSelect: {
+          trainings: 'planning.trainings',
+          exerciseGroups: 'trainings.exerciseGroups',
+        },
+      },*/
+    });
+
+    return planning;
+  }
 }
 
 export default PlanningRepositories;
