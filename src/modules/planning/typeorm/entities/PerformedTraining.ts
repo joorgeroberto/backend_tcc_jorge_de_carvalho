@@ -19,6 +19,9 @@ class PerformedTraining {
   @Column('varchar')
   duration: string;
 
+  @Column('varchar')
+  distance: string;
+
   @Column('float', { name: 'v_med' })
   vMed: number;
 

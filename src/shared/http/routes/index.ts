@@ -4,6 +4,7 @@ import athletesGroupRouter from '@modules/athletesGroup/routes/athletesGroup.rou
 import sessionsRouter from '@modules/athletes/routes/sessions.routes';
 import planningRouter from '@modules/planning/routes/planning.routes';
 import exerciseRouter from '@modules/planning/routes/exercise.routes';
+import performedTrainingRouter from '@modules/planning/routes/performedTraining.routes';
 
 const routes = Router();
 
@@ -14,6 +15,8 @@ routes.use('/athletesGroup', athletesGroupRouter);
 routes.use('/sessions', sessionsRouter);
 
 routes.use('/planning', planningRouter);
+
+routes.use('/performedTraining', performedTrainingRouter);
 
 // Remover em prod
 routes.use('/exercises', exerciseRouter);
