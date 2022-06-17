@@ -14,7 +14,12 @@ class PlanningRepositories extends Repository<Planning> {
   public async findByAthleteId(athleteId: string): Promise<Planning[]> {
     const planning = await this.find({
       where: { athleteId },
-      relations: ['trainings', 'trainings.exerciseGroups', 'trainings.exerciseGroups.exercises'],
+      relations: [
+        'trainings',
+        'trainings.performedTraining',
+        'trainings.exerciseGroups',
+        'trainings.exerciseGroups.exercises',
+      ],
       /*
       * Another way to do this select:
 
