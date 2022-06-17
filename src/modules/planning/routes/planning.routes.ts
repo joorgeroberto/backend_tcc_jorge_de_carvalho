@@ -6,7 +6,16 @@ import isAutheticated from '@shared/http/middlewares/isAutheticated';
 const planningRouter = Router();
 const planningsController = new PlanningController();
 
-planningRouter.get('/', isAutheticated, planningsController.index);
+planningRouter.get(
+  '/:id',
+  isAutheticated,
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  planningsController.index,
+);
 
 planningRouter.post(
   '/',
@@ -22,7 +31,7 @@ planningRouter.post(
         .items(
           Joi.object({
             date: Joi.string().required(),
-            isOptional: Joi.boolean().required(),
+            type: Joi.string().required(),
             exerciseGroups: Joi.array()
               .items(
                 Joi.object({

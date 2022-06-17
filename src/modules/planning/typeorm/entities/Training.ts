@@ -20,8 +20,8 @@ class Training {
   @Column('varchar')
   date: string;
 
-  @Column({ name: 'is_optional' })
-  isOptional: boolean;
+  @Column({ name: 'type' })
+  type: string;
 
   @Column('uuid', { name: 'planning_id' })
   planningId: string;

@@ -1,5 +1,4 @@
 import AppError from '@shared/errors/AppError';
-import { hash } from 'bcryptjs';
 import { getCustomRepository } from 'typeorm';
 import Planning from '../typeorm/entities/Planning';
 import PlanningRepositories from '../typeorm/repositories/PlanningRepositories';

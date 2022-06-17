@@ -1,14 +1,17 @@
 import { Request, Response } from 'express';
 import CreatePlanningService from '../services/CreatePlanningService';
-import ListPlanningsService from '../services/ListPlanningsService';
+import ListAthletePlanningsService from '../services/ListAthletePlanningsService';
 import DeletePlanningService from '../services/DeletePlanningService';
 
 export default class PlanningController {
-  public async index(_: Request, response: Response): Promise<Response> {
-    const listAthleteService = new ListPlanningsService();
-    const listAthletes = await listAthleteService.execute();
+  public async index(request: Request, response: Response): Promise<Response> {
+    const { id: athleteId } = request.params;
+    const listAthletePlanningsService = new ListAthletePlanningsService();
+    const listAthletePlannings = await listAthletePlanningsService.execute({
+      athleteId,
+    });
 
-    return response.json(listAthletes);
+    return response.json(listAthletePlannings);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {

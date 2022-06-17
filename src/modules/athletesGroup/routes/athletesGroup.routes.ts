@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import AthletesGroupController from '../controllers/AthletesGroupController';
 import AthletesGroupImageController from '../controllers/AthletesGroupImageController';
+import AthletesFromGroupController from '../controllers/AthletesFromGroupController';
 import multer from 'multer';
 import uploadConfig from '@config/upload';
 import isAutheticated from '@shared/http/middlewares/isAutheticated';
@@ -9,10 +10,13 @@ import isAutheticated from '@shared/http/middlewares/isAutheticated';
 const athletesGroupRouter = Router();
 const athletesGroupController = new AthletesGroupController();
 const athletesGroupImageController = new AthletesGroupImageController();
+const athletesFromGroupController = new AthletesFromGroupController();
 
 const upload = multer(uploadConfig);
 
 athletesGroupRouter.get('/', athletesGroupController.index);
+
+athletesGroupRouter.get('/athletes', isAutheticated, athletesFromGroupController.index);
 
 athletesGroupRouter.post(
   '/',
